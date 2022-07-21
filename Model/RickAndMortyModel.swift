@@ -6,7 +6,7 @@
 import Foundation
 
 // MARK: - RickAndMartyModel
-struct RickAndMartyModel: Codable {
+struct RickAndMortyModel: Codable {
     let info: Info?
     let results: [Result]?
 }
