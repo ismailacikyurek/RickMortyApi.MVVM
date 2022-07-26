@@ -41,18 +41,14 @@ extension RickAndMortyViewController: DashboardViewModelOutputProtocol {
 extension RickAndMortyViewController : UICollectionViewDataSource,UICollectionViewDelegate{
   
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        guard let model = self.model?.results else { return 0 }
+        return model.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionCell
-        cell.lblNAme.text = model?.results![indexPath.row].name
-      
-        if let string = model?.results![indexPath.row].image {
-            if let url = URL(string: string) {
-                cell.imageView.kf.setImage(with: url)
-            }
-        }
+        guard let content = model?.results?[indexPath.row] else { return UICollectionViewCell()}
+        cell.configure(content: content)
       
         cell.layer.borderColor = UIColor.lightGray.cgColor
         cell.layer.borderWidth = 1
